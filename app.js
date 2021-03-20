@@ -8,7 +8,7 @@ const db = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "password",
-	database: "webdev_dbquiz",
+	database: "webdev_quotes",
 });
 
 // Connect DB
@@ -24,8 +24,8 @@ app.get("/", (req, res) => {
 });
 
 // GET all questions
-app.get("/questions", (req, res) => {
-	let sql = `SELECT * FROM Question`;
+app.get("/quotes", (req, res) => {
+	let sql = `SELECT * FROM Quote`;
 	db.query(sql, (err, result) => {
 		if (err) {
 			return console.log("error: " + err.message);
@@ -35,56 +35,45 @@ app.get("/questions", (req, res) => {
 	});
 });
 
-// POST a new question
-app.post("/questions", (req, res) => {
-	// let data = JSON.parse(req.body[0])
-	let question = req.body.question;
-	let choices = req.body.choices;
-	let answer = req.body.answer;
-
-	console.log(req.body); // sent JSON
-
-	// Insert new question
-	let qid = 0;
-	let sql = `INSERT INTO Question (Body) VALUES('${question}')`;
+// GET most recent question
+app.get("/quotes/recent", (req, res) => {
+	let sql = `SELECT * from Quote ORDER BY QuoteID DESC LIMIT 1`;
 	db.query(sql, (err, result) => {
 		if (err) {
 			return console.log("error: " + err.message);
 		}
-
-		// Get inserted row's ID
-		qid = result.insertId;
-
-		// Insert new choices according to new question ID
-		for (let i = 0; i < choices.length; i++) {
-			let isAnswer = false;
-			if (i == answer) {
-				isAnswer = true;
-			}
-
-			let sql = `INSERT INTO Choice(Body, IsAnswer, QuestionID) VALUES('${choices[i]}', ${isAnswer}, ${qid})`;
-			db.query(sql, (err, result) => {
-				if (err) {
-					return console.log("error: " + err.message);
-				}
-				console.log("creating a new Choice success");
-			});
-		}
+		console.log(JSON.parse(JSON.stringify(result)));
+		res.send(result);
 	});
-	res.end("post received");
+});
+
+// POST a new quote
+app.post("/quotes", (req, res) => {
+	let quote = req.body.quote;
+	let author = req.body.author;
+
+	console.log(req.body); // sent JSON
+
+	// Insert new quote
+	let sql = `INSERT INTO Quote (Body, Author) VALUES('${quote}', '${author}')`;
+	db.query(sql, (err, result) => {
+		if (err) {
+			return console.log("error: " + err.message);
+		}
+		res.end("post received");
+	});
 });
 
 // Update an existing question
-app.put("/questions", (req, res) => {
-	let sql = `UPDATE Question
-           SET Body = ?
-           WHERE QuestionID = ?`;
+app.put("/quotes", (req, res) => {
+	let sql = `UPDATE Quote
+           SET Body = ?, Author = ?
+           WHERE QuoteID = ?`;
 
-	let question = req.body.question;
+	let quote = req.body.quote;
 	let id = req.body.id;
-	let choices = req.body.choices;
-	let answer = req.body.answer;
-	let data = [question, id];
+	let author = req.body.author;
+	let data = [quote, author, id];
 
 	console.log(req.body); // sent JSON
 
@@ -92,25 +81,21 @@ app.put("/questions", (req, res) => {
 		if (err) {
 			return console.log("error: " + err.message);
 		}
-		// Get inserted row's ID
-		qid = result.insertId;
+		res.send("updating quote success");
+	});
+});
 
-		// Insert new choices according to new question ID
-		for (let i = 0; i < choices.length; i++) {
-			let isAnswer = false;
-			if (i == answer) {
-				isAnswer = true;
-			}
+app.delete("/quotes", (req, res) => {
+	let sql = `DELETE FROM Quote WHERE QuoteID = ?`;
+	let id = req.body.id;
 
-			let sql = `INSERT INTO Choice(Body, IsAnswer, QuestionID) VALUES('${choices[i]}', ${isAnswer}, ${qid})`;
-			db.query(sql, (err, result) => {
-				if (err) {
-					return console.log("error: " + err.message);
-				}
-				console.log("creating a new Choice success");
-			});
+	console.log(req.body); // sent JSON
+
+	db.query(sql, id, (err, result) => {
+		if (err) {
+			return console.log("error: " + err.message);
 		}
-		res.send("updating question success");
+		res.send("deleting quote success");
 	});
 });
 
