@@ -22,6 +22,7 @@ db.connect(function (err) {
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Methods","*");
 	next();
   });
 
@@ -55,8 +56,8 @@ app.get("/quotes/recent", (req, res) => {
 
 // POST a new quote
 app.post("/quotes", (req, res) => {
-	let quote = req.body.quote;
-	let author = req.body.author;
+	let quote = req.body.Quote;
+	let author = req.body.Author;
 
 	console.log(req.body); // sent JSON
 
@@ -76,9 +77,9 @@ app.put("/quotes", (req, res) => {
            SET Body = ?, Author = ?
            WHERE QuoteID = ?`;
 
-	let quote = req.body.quote;
-	let id = req.body.id;
-	let author = req.body.author;
+	let quote = req.body.Quote;
+	let id = req.body.QuoteID;
+	let author = req.body.Author;
 	let data = [quote, author, id];
 
 	console.log(req.body); // sent JSON
@@ -92,8 +93,9 @@ app.put("/quotes", (req, res) => {
 });
 
 app.delete("/quotes", (req, res) => {
+	let id = req.body.QuoteID;
+	id = parseInt(id);
 	let sql = `DELETE FROM Quote WHERE QuoteID = ?`;
-	let id = req.body.id;
 
 	console.log(req.body); // sent JSON
 

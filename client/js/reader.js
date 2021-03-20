@@ -54,7 +54,7 @@ let render = function(obj) {
 
     qdiv.id = "quote" + qid;
     
-    qtext.id = "quote" + qid;
+    qtext.id = "qtext" + qid;
     qtext.name = "quote" + qid;
     qtext.rows = 3;
     qtext.innerHTML = body;
@@ -68,7 +68,9 @@ let render = function(obj) {
     let atext = document.createElement("textarea");
     let alabel = document.createElement("label");
 
-    atext.id = "author" + qid;
+    adiv.id = "author" + qid;
+
+    atext.id = "atext" + qid;
     atext.name = "author" + qid;
     atext.rows = 3;
     atext.innerHTML = author;
