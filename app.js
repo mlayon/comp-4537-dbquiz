@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const db = mysql.createConnection({
-	host: "localhost",
+	host: "glowhost.com",
 	user: "mlayonco_root",
 	password: "password",
 	database: "mlayonco_quotes",
