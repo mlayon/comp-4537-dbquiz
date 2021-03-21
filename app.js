@@ -5,10 +5,10 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const db = mysql.createConnection({
-	host: "mlayon-comp4537.com",
-	user: "mlayonco_root",
-	password: "password",
-	database: "mlayonco_quotes",
+	host: "freedb.tech",
+	user: "freedbtech_webdevroot",
+	password: "webdevpw",
+	database: "freedbtech_webdevquotes",
 });
 
 // Connect DB
