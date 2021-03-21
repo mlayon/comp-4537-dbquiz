@@ -12,7 +12,6 @@ let getAll = function(){
             document.getElementById("main").innerHTML = ""; // clear out page
 
     		for(let i = 0; i < arr.length; i++) {
-         		// console.log(arr[i])
                 render(arr[i]);
      		}
     	}
@@ -169,6 +168,7 @@ let renderBlank = function(obj) {
 
 }
 
+// calls PUT request to update an existing quote
 function update(qid) {
     let qtext = document.getElementById("qtext" + qid);
     let atext = document.getElementById("atext" + qid);
@@ -186,6 +186,7 @@ function update(qid) {
     }
 }
 
+// removes an existing quote
 function remove(qid) {
     xhttp.open("DELETE", path + "/quotes", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
@@ -202,6 +203,7 @@ function remove(qid) {
     }
 }
 
+// removes a blank quote from DOM
 function removeBlank(qid) {
     let qdiv = document.getElementById("quote"+qid);
     let adiv = document.getElementById("author"+qid);
@@ -212,6 +214,7 @@ function removeBlank(qid) {
     count--;
 }
 
+// creates a new quote
 function save(qid) {
     let qtext = document.getElementById("qtext" + qid);
     let atext = document.getElementById("atext" + qid);

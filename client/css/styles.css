@@ -14,52 +14,8 @@ textarea {
     width: 30em;
 }
 
-.radio {
-    margin-right: 1em;
-    margin-top: 0.5em;
-    vertical-align: middle;
-}
-
-.code {
-    font-family: "Courier Prime", monospace;
-}
-
-.red {
-    color: red;
-}
-
-.blue {
-    color: blue;
-}
-
-.green {
-    color: green;
-}
-
-#back-btn {
-    margin-top: 3rem;
-}
 
 .buttons button {
     margin-right: 3em;
 }
 
-.answer {
-    display: flex;
-    justify-content: left;
-    height: 6em;
-}
-
-.qBody {
-    margin: 1em;
-    height: 6em;
-}
-
-.answerTag {
-    margin-left: 1em;
-}
-
-
-/* .ansBody {
-    padding: 1em;
-} */
