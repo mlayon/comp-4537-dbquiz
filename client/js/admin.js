@@ -1,5 +1,5 @@
 const xhttp = new XMLHttpRequest();
-const path = "http://localhost:3000";
+const path = "https://quotes-4537.herokuapp.com";
 var count = 0; // keeps track of total # of quotes
 
 // makes get request for getting all quotes
